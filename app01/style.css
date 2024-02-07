@@ -1,0 +1,13 @@
+    h1 {
+        font-size: 2rem;
+    }
+
+    button,
+    p,
+    input {
+        font-size: 1.5rem;
+    }
+
+    input {
+        width: 9rem;
+    }
