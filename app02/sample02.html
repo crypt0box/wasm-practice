@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0">
+  <link href="style.css" rel="stylesheet">
+  <title>sample02.html</title>
+</head>
+
+<body>
+  <h1>sample02.html</h1>
+  <div>
+    <P>結果：<span id="output"></span></P>
+  </div>
+  <script>
+    var Module = { "onRuntimeInitialized": initApp };
+    function initApp() {
+      // HTML要素を取得
+      const output = document.querySelector("#output");
+
+      // WebAssemblyから関数をエクスポート
+      const getFactorial = Module.cwrap(
+        "getFactorial", //関数名
+        "number",       //戻り値の型
+        ["number"]      //引数の型
+      );
+
+      // 1～5までの階乗を出力
+      let str = "";
+      for (i = 1; i <= 5; i++) {
+        const ret = getFactorial(i);//getFactorial関数を呼び出し
+        str += i + "!=" + ret + ", ";
+      }
+      output.innerText = str.toString();
+    }
+  </script>
+  <script src="sample02.js"></script>
+</body>
+
+</html>
