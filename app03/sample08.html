@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0">
+  <link href="style.css" rel="stylesheet">
+  <title>sample08.html</title>
+</head>
+
+<body>
+  <h1>sample08</h1>
+  <script>
+    var Module = { "onRuntimeInitialized": initApp };
+    function initApp() {
+
+      // 引数の配列の定義とメモリ領域の確保
+      const array = new Int32Array([200, 400, 200, 500]);
+      const nByte = array.BYTES_PER_ELEMENT;
+      const size = array.length;
+      const ptr = Module._malloc(size * nByte);
+      Module.HEAP32.set(array, ptr / nByte);
+
+      // WebAssemblyのsumArray()関数をccall()で呼び出し
+      console.log("JS: input=", array);
+      const ret = Module.ccall(
+        "sumArray32",             //関数名
+        "number",                 //戻り値の型
+        ["number", "number"],      //引数の型
+        [ptr, size]               //引数の型
+      );
+      console.log("JS: return=" + ret);
+
+      // メモリ領域の解放
+      Module._free(ptr);
+    }
+  </script>
+  <script src="sample08.js"></script>
+</body>
+
+</html>

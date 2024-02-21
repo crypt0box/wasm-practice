@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0">
+  <link href="style.css" rel="stylesheet">
+  <title>sample02.html</title>
+</head>
+
+<body>
+  <h1>sample02</h1>
+  <script>
+    var Module = { "onRuntimeInitialized": initApp };
+    function initApp() {
+      // WebAssemblyから関数をcwrap()でエクスポート
+      const sumArray = Module.cwrap(
+        "sumArray",             //関数名
+        "number",               //戻り値の型
+        ["array", "number"]      //引数の型
+      );
+
+      // WebAssemblyのsumArray()関数を呼び出し
+      const array = new Uint8Array([2, 4, 2, 5]);
+      const size = array.length;
+      console.log("JS: input=", array);
+      const ret = sumArray(array, size);
+      console.log("JS: return=" + ret);
+    }
+  </script>
+  <script src="sample02.js"></script>
+</body>
+
+</html>

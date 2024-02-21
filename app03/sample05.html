@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0">
+  <link href="style.css" rel="stylesheet">
+  <title>sample05.html</title>
+</head>
+
+<body>
+  <h1>sample05</h1>
+  <script>
+    var Module = { "onRuntimeInitialized": initApp };
+    function initApp() {
+
+      // WebAssemblyのgetSquare()関数をccall()で呼び出し
+      const input = 9;
+      console.log("JS: input=", input);
+      const ret = Module.ccall(
+        "getSquare",    //関数名
+        "number",       //戻り値の型
+        ["number"],     //引数の型
+        [input]         //引数の値
+      );
+      console.log("JS: return=", ret);
+
+    }
+  </script>
+  <script src="sample05.js"></script>
+</body>
+
+</html>

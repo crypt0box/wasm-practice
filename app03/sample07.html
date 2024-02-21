@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0">
+  <link href="style.css" rel="stylesheet">
+  <title>sample07.html</title>
+</head>
+
+<body>
+  <h1>sample07</h1>
+  <script>
+    var Module = { "onRuntimeInitialized": initApp };
+    function initApp() {
+      
+      // WebAssemblyのinputStr()関数をccall()で呼び出し
+      const str = "sample data";
+      console.log("JS: input=", str);
+      const ret = Module.ccall(
+        "inputStr",             //関数名
+        "string",               //戻り値の型
+        ["string"],              //引数の型
+        [str]                   //引数の値
+      );
+      console.log("JS: return=", ret);
+    }
+  </script>
+  <script src="sample07.js"></script>
+</body>
+
+</html>

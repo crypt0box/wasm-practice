@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0">
+  <link href="style.css" rel="stylesheet">
+  <title>sample10.html</title>
+</head>
+
+<body>
+  <h1>sample10</h1>
+  <script>
+    var Module = { "onRuntimeInitialized": onInstanceReady };
+    
+    //WebAssemblyのインスタンス化完了時の呼び出し関数
+    function onInstanceReady() {
+      console.log("JS: WASM instance ready!");
+    }
+
+    //WebAssemblyのアプリ初期化完了時の呼び出し関数
+    function onWasmAppReady(code){
+      console.log("JS: WASM app ready! code=",code);
+    }
+  </script>
+  <script src="sample10.js"></script>
+</body>
+
+</html>
