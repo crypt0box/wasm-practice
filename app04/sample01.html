@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0">
+    <link href="style.css" rel="stylesheet">
+    <title>sample01.html</title>
+</head>
+
+<body>
+    <h1>sample01</h1>
+    <script>
+        var Module = { "onRuntimeInitialized": initApp };
+        function initApp() {
+
+            // WebAssemblyから関数をcwrap()でエクスポート
+            const editArray = Module.cwrap(
+                "editArray",    //関数名
+                null,             //戻り値の型
+                ["number", "number"]      //引数の型
+            );
+
+            // 配列のサイズ指定
+            const arraySize = 1000000;
+
+            // 0～1000000の値を配列へ代入
+            let input_array = new Int32Array(arraySize);
+            for (let i = 0; i < arraySize; i++) {
+                input_array[i] = i;
+            }
+
+            //入力データをログ出力
+            console.log(input_array);
+
+            //配列を保存するメモリ領域を確保
+            let nByte = input_array.BYTES_PER_ELEMENT;
+            let ptr = Module._malloc(arraySize * nByte);
+
+            //メモリ領域に配列データのコピー
+            Module.HEAP32.set(input_array, ptr / nByte);
+
+            //処理開始準備
+            let totalTime = 0;
+            const repeatCount = 10;
+            console.log("start......");
+
+            // editArray関数を10回繰り返し呼び出し
+            for (let i = 0; i < repeatCount; i++) {
+                const startTime = performance.now();
+
+                editArray(ptr, arraySize);
+
+                const endTime = performance.now();
+                const processTime = (endTime - startTime);
+                console.log("#" + (i + 1) + ":"
+                    + processTime.toFixed(2) + "msec");
+                totalTime += processTime;
+            }
+
+            // 処理完了
+            console.log("complete......");
+            console.log("averageTime:" +
+                (totalTime / repeatCount).toFixed(2) + "msec");
+
+            //メモリ上の処理結果を配列にコピー
+            let output_array = new Int32Array(
+                Module.HEAP32.buffer, ptr, 100);
+            console.log(output_array);
+
+            //確保したメモリの解放
+            Module._free(ptr);
+        }
+    </script>
+    <script src="sample01.js"></script>
+</body>
+
+</html>

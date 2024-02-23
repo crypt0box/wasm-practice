@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0">
+    <link href="style.css" rel="stylesheet">
+    <title>sample03.html</title>
+</head>
+
+<body>
+    <h1>sample03</h1>
+    <script>
+        function initApp() {
+
+            // 配列のサイズ指定    
+            const arraySize = 1000000;
+            
+            // 0～1000000の値を配列へ代入
+            const input_array = new Int32Array(arraySize);
+            for (let i = 0; i < arraySize; i++) {
+                input_array[i] = i;
+            }
+
+            //入力データをログ出力
+            console.log(input_array);
+
+            //処理開始準備
+            let totalTime = 0;
+            const repeatCount = 10;
+            console.log("start......");
+
+            // editArray関数を10回繰り返し呼び出し
+            for (let i = 0; i < repeatCount; i++) {
+                const startTime = performance.now();
+
+                editArray(input_array, arraySize);
+
+                const endTime = performance.now();
+                const processTime = (endTime - startTime);
+                console.log("#" + (i + 1) + ":" + 
+                    processTime.toFixed(2) + "msec");
+                totalTime += processTime;
+            }
+
+            // 処理完了
+            console.log("complete......");
+            console.log("averageTime:" +
+                (totalTime / repeatCount).toFixed(2) + "msec");
+
+            //処理結果をログ出力
+            console.log(input_array);
+        }
+
+        // データを更新する関数
+        function editArray(arr, size) {
+            for (let i = 0; i < size; i++) {
+                arr[i] += 3;
+            }
+            return arr;
+        }
+
+        initApp();
+    </script>
+
+</body>
+
+</html>
