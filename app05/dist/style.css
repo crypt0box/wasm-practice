@@ -1,0 +1,23 @@
+h1 {
+    font-size: 2rem;
+}
+
+p {
+    font-size: 1.5rem;
+}
+
+ul {
+    display: flex;
+}
+
+li {
+    list-style: none;
+}
+
+div {
+    margin-top: 1rem;
+}
+
+img {
+    border: solid black 1px;
+}

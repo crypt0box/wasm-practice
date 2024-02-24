@@ -1,0 +1,1 @@
+npx webpack build --config sample02.config.js
