@@ -178,7 +178,8 @@ async function setDetector() {
 //======================================
 async function detectHand() {
   // 検出繰り返し回数（デモは3000回、計測時は15回）
-  const MAX_LOOP = DEMO ? 3000 : 15;
+  // const MAX_LOOP = DEMO ? 3000 : 15;
+  const MAX_LOOP = 3000;
 
   // 繰り返し回数のカウントアップ
   loopCount++;
